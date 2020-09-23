@@ -35,14 +35,32 @@ const reset = () => {
 
 reset();
 
+const guessesElem = document.getElementById('guesses');
+
+const showGuesses = () => {
+  while (guessesElem.firstChild) {
+    guessesElem.removeChild(guessesElem.firstChild);
+  }
+
+  for (const [correct] of guesses) {
+    const elem = document.createElement('div');
+
+    elem.style.background = correct ? 'green' : 'red';
+
+    guessesElem.appendChild(elem);
+  }
+};
+
 const guess = () => {
   shuffleFreqs();
 
   if (guesses.length >= 10) {
-    console.log(`you landed on diff ${diff}`, guesses);
+    document.getElementById('result').textContent = `Score: ${Math.round(guesses[9][1] * 10) / 10} Hz`;
 
     reset();
   }
+
+  showGuesses();
 };
 
 const correctGuess = () => {
